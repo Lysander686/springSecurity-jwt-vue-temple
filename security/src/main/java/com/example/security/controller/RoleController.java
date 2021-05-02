@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- *
+/*
  * @Date:2019/1/21
  * @Description：
  */
@@ -25,8 +24,7 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
-    /**
-     * 更新角色信息
+    /* 更新角色信息
      * @param map
      * @return
      */
@@ -36,8 +34,7 @@ public class RoleController {
         return roleService.updateById(map);
     }
 
-    /**
-     * 删除角色
+    /* 删除角色
      * @param id
      * @return
      */
@@ -49,8 +46,7 @@ public class RoleController {
         return roleService.delRoleById(map);
     }
 
-    /**
-     * 添加角色
+    /* 添加角色
      * @param map
      * @return
      */
@@ -60,8 +56,7 @@ public class RoleController {
         return roleService.addRoleById(map);
     }
 
-    /**
-     * 获取角色列表
+    /* 获取角色列表
      * @param map
      * @return
      */
@@ -71,8 +66,7 @@ public class RoleController {
         return roleService.getRoleListByCond(map);
     }
 
-    /**
-     * 获取全部角色列表
+    /* 获取全部角色列表
      * @param map
      * @return
      */
@@ -82,8 +76,7 @@ public class RoleController {
         return roleService.getAllRoleList(map);
     }
 
-    /**
-     * 根据权限id查询角色列表
+    /* 根据权限id查询角色列表
      * @param map
      * @return
      */

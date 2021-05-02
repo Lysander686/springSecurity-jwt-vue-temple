@@ -7,8 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
-/**
- *
+/*
  * @Date:2019/1/4
  * @Description：
  */

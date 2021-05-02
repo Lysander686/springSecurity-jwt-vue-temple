@@ -19,8 +19,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- *
+/*
  * @Date:2019/1/4
  * @Description：
  */
@@ -40,10 +39,8 @@ public class JwtTokenUtil implements Serializable {
 
     private static CompressionCodecResolver codecResolver = new DefaultCompressionCodecResolver();
 
-    /**
-     * 从数据声明生成令牌
-     *
-     * @param claims 数据声明
+    /* 从数据声明生成令牌
+      @param claims 数据声明
      * @return 令牌
      */
     private String generateToken(Map<String, Object> claims) {
@@ -113,8 +110,7 @@ public class JwtTokenUtil implements Serializable {
     }
 
 
-    /* *
-     * @Description
+    /*  @Description
      * @Param [val] 从json数据中读取格式化map
      * @Return java.util.Map<java.lang.String,java.lang.Object>
      */
@@ -127,10 +123,8 @@ public class JwtTokenUtil implements Serializable {
     }
 
 
-    /**
-     * 从令牌中获取数据声明
-     *
-     * @param token 令牌
+    /* 从令牌中获取数据声明
+      @param token 令牌
      * @return 数据声明
      */
     public Claims getClaimsFromToken(String token) {
@@ -143,10 +137,8 @@ public class JwtTokenUtil implements Serializable {
         return claims;
     }
 
-    /**
-     * 生成令牌
-     *
-     * @param jwtUser 用户
+    /* 生成令牌
+      @param jwtUser 用户
      * @return 令牌
      */
     public String generateToken(JwtUser jwtUser) {
@@ -157,10 +149,8 @@ public class JwtTokenUtil implements Serializable {
         return generateToken(claims);
     }
 
-    /**
-     * 从令牌中获取用户名
-     *
-     * @param token 令牌
+    /* 从令牌中获取用户名
+      @param token 令牌
      * @return 用户名
      */
     public String getUsernameFromToken(String token) {
@@ -174,10 +164,8 @@ public class JwtTokenUtil implements Serializable {
         return username;
     }
 
-    /**
-     * 从令牌中获取用户id
-     *
-     * @param token 令牌
+    /* 从令牌中获取用户id
+      @param token 令牌
      * @return 用户名
      */
     public String getUseridFromToken(String token) {
@@ -191,10 +179,8 @@ public class JwtTokenUtil implements Serializable {
         return userid;
     }
 
-    /**
-     * 判断令牌是否过期
-     *
-     * @param token 令牌
+    /* 判断令牌是否过期
+      @param token 令牌
      * @return 是否过期
      */
     public Boolean isTokenExpired(String token) {
@@ -207,10 +193,8 @@ public class JwtTokenUtil implements Serializable {
         }
     }
 
-    /**
-     * 刷新令牌
-     *
-     * @param token 原令牌
+    /* 刷新令牌
+      @param token 原令牌
      * @return 新令牌
      */
     public String refreshToken(String token) {
@@ -227,10 +211,8 @@ public class JwtTokenUtil implements Serializable {
         return refreshedToken;
     }
 
-    /**
-     * 验证令牌
-     *
-     * @param token 令牌
+    /* 验证令牌
+      @param token 令牌
      * @param
      * @return 是否有效
      */

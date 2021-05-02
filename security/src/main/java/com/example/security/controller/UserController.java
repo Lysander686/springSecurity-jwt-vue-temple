@@ -16,8 +16,7 @@ import org.springframework.web.method.annotation.ModelAttributeMethodProcessor;
 
 import java.util.Map;
 
-/**
- *
+/*
  * @Date:2019/1/7
  * @Description：
  */
@@ -30,8 +29,7 @@ public class UserController {
     private UserService userService;
 
 
-    /**
-     * 通过token获取用户信息
+    /* 通过token获取用户信息
      * @param map
      * @return
      */
@@ -44,8 +42,7 @@ public class UserController {
     }
 
 
-    /**
-     * 获取当前用户下的路由菜单
+    /* 获取当前用户下的路由菜单
      * @param map
      * @return
      */
@@ -59,8 +56,7 @@ public class UserController {
     }
 
 
-    /**
-     * 获取所有的菜单并返回菜单树
+    /* 获取所有的菜单并返回菜单树
      * @param map
      * @return
      */

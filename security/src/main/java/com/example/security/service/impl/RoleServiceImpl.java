@@ -17,8 +17,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
 
-/**
- *
+/*
  * @Date:2019/1/7
  * @Description：
  */
@@ -31,8 +30,7 @@ public class RoleServiceImpl implements RoleService
     private RoleMapper roleMapper;
 
 
-    /**
-     * 分页获取角色列表
+    /* 分页获取角色列表
      * @param map
      * @return
      */
@@ -42,8 +40,7 @@ public class RoleServiceImpl implements RoleService
         Integer pageCur  = Integer.valueOf(map.get("curPageNum").toString());
         Integer pageSize = Integer.valueOf(map.get("pageSize").toString());
 
-        /**
-         * 分页数据
+        /* 分页数据
          */
         Page page = PageHelper.startPage(pageCur,pageSize);
         ArrayList list = roleMapper.getRoleListByCond(map);
@@ -51,8 +48,7 @@ public class RoleServiceImpl implements RoleService
         return new RetResult(RetCode.SUCCESS.getCode(),"查询成功",pageData);
     }
 
-    /**
-     * 得到角色列表，资源管理使用
+    /* 得到角色列表，资源管理使用
      * @param map
      * @return
      */
@@ -69,8 +65,7 @@ public class RoleServiceImpl implements RoleService
         return new RetResult(RetCode.SUCCESS.getCode(),roleList);
     }
 
-    /**
-     * 通过资源id获取角色集合
+    /* 通过资源id获取角色集合
      * @param map
      * @return
      */
@@ -85,8 +80,7 @@ public class RoleServiceImpl implements RoleService
         return new RetResult(RetCode.SUCCESS.getCode(),ids);
     }
 
-    /**
-     * 添加角色
+    /* 添加角色
      * @param map
      * @return
      */
@@ -102,8 +96,7 @@ public class RoleServiceImpl implements RoleService
 
     }
 
-    /**
-     * 删除角色
+    /* 删除角色
      * @param map
      * @return
      */
@@ -115,8 +108,7 @@ public class RoleServiceImpl implements RoleService
         return new RetResult(RetCode.SUCCESS.getCode(),roleMapper.del(Long.parseLong(map.get("id").toString())));
     }
 
-    /**
-     * 更新角色信息
+    /* 更新角色信息
      * @param map
      * @return
      */

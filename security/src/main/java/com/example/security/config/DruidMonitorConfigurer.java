@@ -7,15 +7,13 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- *
+/*
  * @Date:2019/1/28
  * @Description：
  */
 @Configuration
 public class DruidMonitorConfigurer {
-    /**
-     * 注册ServletRegistrationBean
+    /* 注册ServletRegistrationBean
      * @return
      */
     @Bean
@@ -33,8 +31,7 @@ public class DruidMonitorConfigurer {
         return bean;
     }
 
-    /**
-     * 注册FilterRegistrationBean
+    /* 注册FilterRegistrationBean
      * @return
      */
     @Bean

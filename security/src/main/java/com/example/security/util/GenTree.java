@@ -4,16 +4,14 @@ import com.example.security.entity.Permission;
 
 import java.util.*;
 
-/**
- *
+/*
  * @Date:2019/1/7
  * @Description：把数据库中的list转成树形结构
  */
 public class GenTree {
 
 
-    /**
-     * 递归根节点
+    /* 递归根节点
      * @param nodes
      * @return
      */
@@ -34,8 +32,7 @@ public class GenTree {
         return root;
     }
 
-    /**
-     * 递归子节点
+    /* 递归子节点
      * @param permission
      * @param nodes
      * @return

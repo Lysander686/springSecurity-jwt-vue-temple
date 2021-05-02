@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- *
+/*
  * @Date:2019/1/22
  * @Description：
  */
@@ -24,8 +23,7 @@ public class PermissionController {
     @Autowired
     private PermissionService permissionService;
 
-    /**
-     * 更新菜单菜单
+    /* 更新菜单菜单
      * @param map
      * @return
      */
@@ -35,8 +33,7 @@ public class PermissionController {
         return permissionService.update(map);
     }
 
-    /**
-     * 添加菜单
+    /* 添加菜单
      * @param map
      * @return
      */
@@ -47,8 +44,7 @@ public class PermissionController {
     }
 
 
-    /**
-     * 删除菜单
+    /* 删除菜单
      * @param per_id
      * @return
      */
@@ -60,8 +56,7 @@ public class PermissionController {
         return permissionService.del(map);
     }
 
-    /**
-     * 获取所有菜单（树形表格数据）
+    /* 获取所有菜单（树形表格数据）
      * @param map
      * @return
      */
@@ -72,8 +67,7 @@ public class PermissionController {
         return new RetResult(RetCode.SUCCESS.getCode(),permissionService.queryAllMenusTree(map));
     }
 
-    /**
-     * 获取角色对应的id集合
+    /* 获取角色对应的id集合
      * @param map
      * @return
      */
@@ -85,8 +79,7 @@ public class PermissionController {
     }
 
 
-    /**
-     * 获取角色对应的id集合
+    /* 获取角色对应的id集合
      * @param map
      * @return
      */

@@ -6,10 +6,8 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-/**
- *
- * @Date:2019/2/21
- * @Description：
+/*
+  @Description：
  */
 @Configuration
 public class RedisConfigurer {

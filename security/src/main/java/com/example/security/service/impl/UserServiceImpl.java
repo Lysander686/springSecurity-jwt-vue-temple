@@ -26,8 +26,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.*;
 
-/**
- * @Author:YangWenbin
+/* @Author:YangWenbin
  * @Description：
  * @Date:21:38 2019/1/5
  * @ModifiedBy:
@@ -61,8 +60,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    /**
-     * 获取用户信息
+    /* 获取用户信息
      * @param username
      * @return
      */
@@ -73,8 +71,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    /**
-     * 登录方法
+    /* 登录方法
      * @param username
      * @param passwordAES
      * @return
@@ -105,8 +102,7 @@ public class UserServiceImpl implements UserService {
         return new RetResult(RetCode.SUCCESS.getCode(),"登录成功",jwt);
     }
 
-    /**
-     * 获取用户信息，包括角色列表，权限资源，返回给前端使用
+    /* 获取用户信息，包括角色列表，权限资源，返回给前端使用
      * @param username
      * @return
      */
@@ -131,8 +127,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    /**
-     * 获取菜单树
+    /* 获取菜单树
      * @param username
      * @return
      */
@@ -153,8 +148,7 @@ public class UserServiceImpl implements UserService {
         return new RetResult(RetCode.SUCCESS.getCode(),"获取菜单树成功",GenTree.genRoot(permissions));
     }
 
-    /**
-     * 获取所有的菜单树树形表格用
+    /* 获取所有的菜单树树形表格用
      * @param permissionList
      * @return
      */
@@ -176,8 +170,7 @@ public class UserServiceImpl implements UserService {
         return permissions;
     }
 
-    /**
-     * 通过菜单id获取菜单树
+    /* 通过菜单id获取菜单树
      * @param per_parent_id
      * @return
      */

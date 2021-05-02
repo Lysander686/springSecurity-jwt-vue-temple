@@ -20,8 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @Author:YangWenbin
+/* @Author:YangWenbin
  * @Description：
  * @Date:20:44 2019/1/5
  * @ModifiedBy:
@@ -37,8 +36,7 @@ public interface UserService {
 
     RetResult getUserInfo(String username);
 
-    /**
-     * 获取菜单树
+    /* 获取菜单树
      * @param username
      * @return
      */

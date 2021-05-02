@@ -18,8 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- *
+/*
  * @Date:2019/1/22
  * @Description：
  */
@@ -33,8 +32,7 @@ public class PermissionServiceImpl implements PermissionService {
 
 
 
-    /**
-     * 更新菜单
+    /* 更新菜单
      * @param map
      * @return
      */
@@ -46,8 +44,7 @@ public class PermissionServiceImpl implements PermissionService {
         return  new RetResult(RetCode.SUCCESS.getCode(),permissionMapper.update(map));
     }
 
-    /**
-     * 添加菜单
+    /* 添加菜单
      * @param map
      * @return
      */
@@ -66,8 +63,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
 
-    /**
-     * 获取所有菜单树，树形表格数据
+    /* 获取所有菜单树，树形表格数据
      * @param map
      * @return
      */

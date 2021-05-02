@@ -5,21 +5,17 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
-import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
-/**
- *
- * @Date:2019/2/21
- * @Description：
+/*
+  @Description：
  */
 @Component
 public class RedisUtil {
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
 
-    /**
-     * 存键值对
+    /* 存键值对
      * @param key
      * @param value
      */
@@ -33,8 +29,7 @@ public class RedisUtil {
         return time;
     }
 
-    /**
-     * 存储键值对，并且设置有效期
+    /* 存储键值对，并且设置有效期
      * @param key
      * @param value
      * @param time
@@ -47,16 +42,15 @@ public class RedisUtil {
 
 
 
-    /**
-     * 读取redis
+    /* 读取redis
      * @param key
      * @return
      */
     public String get( String key) {
-        Object result = null;
+        String result = null;
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         result = operations.get(key);
-        return (String)result;
+        return result;
     }
 
 }

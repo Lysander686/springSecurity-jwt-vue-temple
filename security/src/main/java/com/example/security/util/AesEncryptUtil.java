@@ -12,8 +12,7 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-/**
- *
+/*
  * @Date:2019/2/1
  * @Description：解密前端传递过来的加密密码
  */
@@ -35,8 +34,7 @@ public class AesEncryptUtil {
         return ivParameterSpec;
     }
 
-    /**
-     * 加密
+    /* 加密
      * @param src
      * @param key
      * @return
@@ -58,8 +56,7 @@ public class AesEncryptUtil {
         return cipherBytes;
     }
 
-    /**
-     * 解密
+    /* 解密
      * @param src 原密码
      * @param key 解密后的byte数组
      * @return
@@ -76,8 +73,7 @@ public class AesEncryptUtil {
         return plainBytes;
     }
 
-    /**
-     * 将byte转换为16进制字符串
+    /* 将byte转换为16进制字符串
      * @param src
      * @return
      */
@@ -94,8 +90,7 @@ public class AesEncryptUtil {
         return sb.toString();
     }
 
-    /**
-     * 将16进制字符串装换为byte数组
+    /* 将16进制字符串装换为byte数组
      * @param hexString
      * @return
      */
@@ -115,8 +110,7 @@ public class AesEncryptUtil {
         return (byte) "0123456789ABCDEF".indexOf(c);
     }
 
-    /**
-     * 直接传入psd然后解码进行验证使用
+    /* 直接传入psd然后解码进行验证使用
      * @param psd 前台传过来的String 加密后的数组
      * @return
      */
