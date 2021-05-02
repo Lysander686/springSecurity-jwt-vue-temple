@@ -17,7 +17,7 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
-@CrossOrigin(origins = "*", allowCredentials= "true")
+@CrossOrigin(origins = "*", allowCredentials = "true")
 public class PermissionController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class PermissionController {
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping(value = "/menus")
-    public RetResult getRoleList(@RequestBody Map<String,Object> map){
+    public RetResult getRoleList(@RequestBody Map<String, Object> map) {
         return permissionService.update(map);
     }
 
@@ -39,7 +39,7 @@ public class PermissionController {
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping(value = "/menus")
-    public RetResult addPermisson(@RequestBody Map<String,Object> map){
+    public RetResult addPermisson(@RequestBody Map<String, Object> map) {
         return permissionService.add(map);
     }
 
@@ -50,9 +50,9 @@ public class PermissionController {
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping(value = "/menus/{per_id}")
-    public RetResult delPermission(@PathVariable Long per_id){
-        Map<String,Object> map = new HashMap<>();
-        map.put("per_id",per_id);
+    public RetResult delPermission(@PathVariable Long per_id) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("per_id", per_id);
         return permissionService.del(map);
     }
 
@@ -62,9 +62,9 @@ public class PermissionController {
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping(value = "/getMenusTableTree")
-    public RetResult getMenusTableTree(@RequestBody(required = false) Map<String,Object> map){
+    public RetResult getMenusTableTree(@RequestBody(required = false) Map<String, Object> map) {
         //使用Spring Security 获取用户信息
-        return new RetResult(RetCode.SUCCESS.getCode(),permissionService.queryAllMenusTree(map));
+        return new RetResult(RetCode.SUCCESS.getCode(), permissionService.queryAllMenusTree(map));
     }
 
     /* 获取角色对应的id集合
@@ -73,9 +73,9 @@ public class PermissionController {
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping(value = "/getPerIdList")
-    public RetResult getPerIdList(@RequestBody Map<String,Object> map){
+    public RetResult getPerIdList(@RequestBody Map<String, Object> map) {
         //使用Spring Security 获取用户信息
-        return new RetResult(RetCode.SUCCESS.getCode(),permissionService.getPerIdList(map));
+        return new RetResult(RetCode.SUCCESS.getCode(), permissionService.getPerIdList(map));
     }
 
 
@@ -85,8 +85,8 @@ public class PermissionController {
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping(value = "/perms")
-    public RetResult addPerms(@RequestBody Map<String,Object> map){
+    public RetResult addPerms(@RequestBody Map<String, Object> map) {
         //使用Spring Security 获取用户信息
-        return new RetResult(RetCode.SUCCESS.getCode(),permissionService.addRP(map));
+        return new RetResult(RetCode.SUCCESS.getCode(), permissionService.addRP(map));
     }
 }

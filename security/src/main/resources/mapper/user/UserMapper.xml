@@ -3,11 +3,10 @@
 <mapper namespace="com.example.security.mapper.UserMapper">
 
 
-
     <resultMap id="BaseResultMap" type="com.example.security.entity.User">
-        <id column="id" jdbcType="VARCHAR" property="id" />
-        <result column="username" jdbcType="VARCHAR" property="username" />
-        <result column="password" jdbcType="VARCHAR" property="password" />
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
         <collection property="roles" ofType="Role">
             <id column="id" property="id"/>
             <result column="rolename" property="rolename"/>
@@ -15,20 +14,28 @@
     </resultMap>
 
     <select id="selectByUserName" parameterType="String" resultMap="BaseResultMap">
-        select `User`.id,`User`.username,`User`.`password` ,Role.rolename from User
-        LEFT JOIN RoleUser on RoleUser.userId = `User`.id
-        LEFT JOIN Role on Role.id = RoleUser.roleId where User.username = #{username}
+        select `User`.id, `User`.username, `User`.`password`, Role.rolename
+        from User
+                 LEFT JOIN RoleUser on RoleUser.userId = `User`.id
+                 LEFT JOIN Role on Role.id = RoleUser.roleId
+        where User.username = #{username}
     </select>
 
-    <select id="selectPasswordByUsername" parameterType="String" resultType="String" >
-        select User.password from User where User.username = #{username}
+    <select id="selectPasswordByUsername" parameterType="String" resultType="String">
+        select User.password
+        from User
+        where User.username = #{username}
     </select>
 
-    <select id="selectUserByUsername"  resultType="com.example.security.entity.User" >
-        select * from User where User.username = #{username}
+    <select id="selectUserByUsername" resultType="com.example.security.entity.User">
+        select *
+        from User
+        where User.username = #{username}
     </select>
 
-    <select id="selectUserNameIsExist" parameterType="String" resultType="Integer" >
-        select count(*) from User where User.username = #{username}
+    <select id="selectUserNameIsExist" parameterType="String" resultType="Integer">
+        select count(*)
+        from User
+        where User.username = #{username}
     </select>
 </mapper>

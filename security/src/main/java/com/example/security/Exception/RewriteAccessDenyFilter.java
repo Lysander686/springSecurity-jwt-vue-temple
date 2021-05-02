@@ -17,12 +17,12 @@ import java.io.IOException;
  * @Description：
  */
 @Component
-public class RewriteAccessDenyFilter implements AccessDeniedHandler  {
+public class RewriteAccessDenyFilter implements AccessDeniedHandler {
 
 
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
-        RetResult retResult = new RetResult(RetCode.NODEFINED.getCode(),"抱歉，您没有访问该接口的权限");
+        RetResult retResult = new RetResult(RetCode.NODEFINED.getCode(), "抱歉，您没有访问该接口的权限");
         httpServletResponse.setContentType("application/json;charset=utf-8");
         httpServletResponse.setCharacterEncoding("UTF-8");
         httpServletResponse.getWriter().write(JSON.toJSONString(retResult));

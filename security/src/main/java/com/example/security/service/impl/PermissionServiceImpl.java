@@ -30,18 +30,16 @@ public class PermissionServiceImpl implements PermissionService {
     private PermissionMapper permissionMapper;
 
 
-
-
     /* 更新菜单
      * @param map
      * @return
      */
     @Override
-    public RetResult update(Map<String,Object> map) {
-        if(map.get("per_id") == null){
-            return new RetResult(RetCode.FAIL.getCode(),"id不能为空");
+    public RetResult update(Map<String, Object> map) {
+        if (map.get("per_id") == null) {
+            return new RetResult(RetCode.FAIL.getCode(), "id不能为空");
         }
-        return  new RetResult(RetCode.SUCCESS.getCode(),permissionMapper.update(map));
+        return new RetResult(RetCode.SUCCESS.getCode(), permissionMapper.update(map));
     }
 
     /* 添加菜单
@@ -49,17 +47,17 @@ public class PermissionServiceImpl implements PermissionService {
      * @return
      */
     @Override
-    public RetResult add(Map<String,Object> map) {
-        if( map.get("per_resource") ==null){
-            return new RetResult(RetCode.FAIL.getCode(),"Id,Url路径不能为空");
+    public RetResult add(Map<String, Object> map) {
+        if (map.get("per_resource") == null) {
+            return new RetResult(RetCode.FAIL.getCode(), "Id,Url路径不能为空");
         }
         Permission permission = new Permission(map);
-        SnowFlake snowFlake = new SnowFlake(2,3);
+        SnowFlake snowFlake = new SnowFlake(2, 3);
         permission.setPer_id(snowFlake.nextId());
         log.info(permission.getPer_id().toString());
         permission.setPer_crtTime(Timestamp.valueOf(LocalDateTime.now()));
         permission.setPer_type("menu");
-        return new RetResult(RetCode.SUCCESS.getCode(),"添加成功",permissionMapper.add(permission));
+        return new RetResult(RetCode.SUCCESS.getCode(), "添加成功", permissionMapper.add(permission));
     }
 
 
@@ -74,11 +72,11 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public RetResult getPerIdList(Map<String, Object> map) {
-        if(map.get("rp_role_id") == null){
-            return new RetResult(RetCode.FAIL.getCode(),"id不能为空");
+        if (map.get("rp_role_id") == null) {
+            return new RetResult(RetCode.FAIL.getCode(), "id不能为空");
         }
 
-        return new RetResult(RetCode.SUCCESS.getCode(),permissionMapper.getPerIdList(Long.parseLong(map.get("rp_role_id").toString())));
+        return new RetResult(RetCode.SUCCESS.getCode(), permissionMapper.getPerIdList(Long.parseLong(map.get("rp_role_id").toString())));
     }
 
     @Override
@@ -86,18 +84,18 @@ public class PermissionServiceImpl implements PermissionService {
         if (map.get("rp_role_id") == null) {
             return new RetResult(RetCode.FAIL.getCode(), "角色id不能为空");
         } else {
-            if (permissionMapper.getCount(Long.parseLong(map.get("rp_role_id").toString())) > 0){
+            if (permissionMapper.getCount(Long.parseLong(map.get("rp_role_id").toString())) > 0) {
                 permissionMapper.del(Long.parseLong(map.get("rp_role_id").toString()));
             }
-            List list = (List) map.get("checkIds");;
-            if(list != null && list.size() > 0){
+            List list = (List) map.get("checkIds");
+            if (list != null && list.size() > 0) {
                 List<Long> longList = new ArrayList<>();
-                for (Object id : list){
+                for (Object id : list) {
                     longList.add(Long.valueOf(id.toString()));
                 }
                 for (Long ids : longList) {
                     RolePermission rolePermission = new RolePermission(map);
-                    SnowFlake snowFlake = new SnowFlake(2,3);
+                    SnowFlake snowFlake = new SnowFlake(2, 3);
                     rolePermission.setRp_id(snowFlake.nextId());
                     rolePermission.setRp_per_id(ids);
                     permissionMapper.addRP(rolePermission);
@@ -109,11 +107,11 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public RetResult del(Map<String,Object> map) {
-        if(map.get("per_id") == null){
-            return new RetResult(RetCode.FAIL.getCode(),"菜单id不能为空");
+    public RetResult del(Map<String, Object> map) {
+        if (map.get("per_id") == null) {
+            return new RetResult(RetCode.FAIL.getCode(), "菜单id不能为空");
         }
-        return new RetResult(RetCode.SUCCESS.getCode(),permissionMapper.delByPerid(Long.parseLong(map.get("per_id").toString())));
+        return new RetResult(RetCode.SUCCESS.getCode(), permissionMapper.delByPerid(Long.parseLong(map.get("per_id").toString())));
     }
 
 }

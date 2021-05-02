@@ -39,7 +39,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     private RewriteAccessDenyFilter rewriteAccessDenyFilter;
 
     @Autowired
-    public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder)throws Exception{
+    public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.userDetailsService(this.userDetailsService).passwordEncoder(passwordEncoder());
     }
 

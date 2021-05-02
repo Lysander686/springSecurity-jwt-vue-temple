@@ -1,14 +1,14 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: 
-    username: 
-    password: 
+    url:
+    username:
+    password:
   redis:
     #数据库索引
     database: 4
-    host: 
-    port: 
+    host:
+    port:
     password:
     jedis:
       pool:

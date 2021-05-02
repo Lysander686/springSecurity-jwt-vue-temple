@@ -17,7 +17,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -47,7 +46,6 @@ public class UserServiceImpl implements UserService {
     private RedisUtil redisUtil;
 
 
-
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -67,7 +65,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsername(String username) {
         User user = userMapper.selectByUserName(username);
-        log.info("userserviceimpl"+user);
+        log.info("userserviceimpl" + user);
         return user;
     }
 
@@ -83,23 +81,23 @@ public class UserServiceImpl implements UserService {
         String password = null;
         password = AesEncryptUtil.decrypt(passwordAES);
         if (username == null || passwordAES == null) {
-            return new RetResult(RetCode.FAIL.getCode(),"用户名，密码不能为空");
+            return new RetResult(RetCode.FAIL.getCode(), "用户名，密码不能为空");
         }
-        if (! (userMapper.selectUserNameIsExist(username) > 0)){
-            return new RetResult(RetCode.FAIL.getCode(),"用户名不存在，请重试");
-        }else if(!encoder.matches(password,userMapper.selectPasswordByUsername(username))) {
+        if (!(userMapper.selectUserNameIsExist(username) > 0)) {
+            return new RetResult(RetCode.FAIL.getCode(), "用户名不存在，请重试");
+        } else if (!encoder.matches(password, userMapper.selectPasswordByUsername(username))) {
             return new RetResult(RetCode.FAIL.getCode(), "密码输入不正确，请重试");
         }
         UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(username, password);
         final Authentication authentication = authenticationManager.authenticate(upToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        JwtUser userDetails = (JwtUser)userDetailsService.loadUserByUsername(username);
+        JwtUser userDetails = (JwtUser) userDetailsService.loadUserByUsername(username);
         long refreshPeriodTime = 240L;
         String jwt = jwtTokenUtil.generateToken(userDetails);
         String userId = userMapper.selectUserByUsername(username).getId();
         //把签发的jwt token存储到redis中，时间根绝你免登录的时间来设置
-        redisUtil.setAndTime(userId,jwt,refreshPeriodTime);
-        return new RetResult(RetCode.SUCCESS.getCode(),"登录成功",jwt);
+        redisUtil.setAndTime(userId, jwt, refreshPeriodTime);
+        return new RetResult(RetCode.SUCCESS.getCode(), "登录成功", jwt);
     }
 
     /* 获取用户信息，包括角色列表，权限资源，返回给前端使用
@@ -113,17 +111,17 @@ public class UserServiceImpl implements UserService {
         Set<Role> roles = roleMapper.selectByUserName(username);
         List<Permission> permissions = new LinkedList<Permission>();
         Set<Menu> menus = new HashSet<>();
-        roles.forEach( role -> {
-            role.getPermissions().forEach( permission -> {
-                if(permission.getPer_type().equals("menu")){
-                    permissions.add(new Permission(permission.getPer_id(),permission.getPer_parent_id(),permission.getPer_name(),
-                            permission.getPer_resource(),permission.getPer_type(),permission.getPer_icon(),permission.getPer_describe(),
-                            permission.getPer_component(),permission.getPer_sort(),permission.getPer_crtTime(), permission.getChildren()));
+        roles.forEach(role -> {
+            role.getPermissions().forEach(permission -> {
+                if (permission.getPer_type().equals("menu")) {
+                    permissions.add(new Permission(permission.getPer_id(), permission.getPer_parent_id(), permission.getPer_name(),
+                            permission.getPer_resource(), permission.getPer_type(), permission.getPer_icon(), permission.getPer_describe(),
+                            permission.getPer_component(), permission.getPer_sort(), permission.getPer_crtTime(), permission.getChildren()));
                 }
             });
         });
-        UserVo userVo =new UserVo(user.getId(),user.getUsername(),user.getRoles(), BulidTree.genRoot(GenTree.genRoot(permissions)));
-        return new RetResult(RetCode.SUCCESS.getCode(),userVo);
+        UserVo userVo = new UserVo(user.getId(), user.getUsername(), user.getRoles(), BulidTree.genRoot(GenTree.genRoot(permissions)));
+        return new RetResult(RetCode.SUCCESS.getCode(), userVo);
 
     }
 
@@ -135,34 +133,34 @@ public class UserServiceImpl implements UserService {
     public RetResult getMenuTree(String username) {
         List<Permission> permissions = new ArrayList<Permission>();
         Set<Role> roles = roleMapper.selectByUserName(username);
-        roles.forEach( role -> {
-            role.getPermissions().forEach( permission -> {
-                if(permission.getPer_type().equals("menu")){
-                    permissions.add(new Permission(permission.getPer_id(),permission.getPer_parent_id(),permission.getPer_name(),
-                            permission.getPer_resource(),permission.getPer_type(),permission.getPer_icon(),permission.getPer_describe(),
-                            permission.getPer_component(),permission.getPer_sort(),permission.getPer_crtTime(), permission.getChildren()));
+        roles.forEach(role -> {
+            role.getPermissions().forEach(permission -> {
+                if (permission.getPer_type().equals("menu")) {
+                    permissions.add(new Permission(permission.getPer_id(), permission.getPer_parent_id(), permission.getPer_name(),
+                            permission.getPer_resource(), permission.getPer_type(), permission.getPer_icon(), permission.getPer_describe(),
+                            permission.getPer_component(), permission.getPer_sort(), permission.getPer_crtTime(), permission.getChildren()));
                 }
             });
         });
 
-        return new RetResult(RetCode.SUCCESS.getCode(),"获取菜单树成功",GenTree.genRoot(permissions));
+        return new RetResult(RetCode.SUCCESS.getCode(), "获取菜单树成功", GenTree.genRoot(permissions));
     }
 
     /* 获取所有的菜单树树形表格用
      * @param permissionList
      * @return
      */
-    public Object getAllMenuTree(List<Permission> permissionList){
-        List<Map<String,Object>> permissions = new ArrayList<>();
-        permissionList.forEach( permission -> {
-            if(permission != null) {
+    public Object getAllMenuTree(List<Permission> permissionList) {
+        List<Map<String, Object>> permissions = new ArrayList<>();
+        permissionList.forEach(permission -> {
+            if (permission != null) {
                 List<Permission> permissionList1 = permissionMapper.getParentMenu(permission.getPer_id());
                 //vue treeselect 需要的是{"id":"*","label":"*"}格式
-                Map<String,Object> map1 = new HashMap<>();
-                map1.put("id",permission.getPer_id());
-                map1.put("label",permission.getPer_name());
-                if( permissionList1 != null && permissionList1.size() > 0){
-                    map1.put("children",getAllMenuTree(permissionList1));
+                Map<String, Object> map1 = new HashMap<>();
+                map1.put("id", permission.getPer_id());
+                map1.put("label", permission.getPer_name());
+                if (permissionList1 != null && permissionList1.size() > 0) {
+                    map1.put("children", getAllMenuTree(permissionList1));
                 }
                 permissions.add(map1);
             }

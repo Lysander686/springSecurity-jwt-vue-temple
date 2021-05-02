@@ -2,7 +2,8 @@ package com.example.security.util;
 
 import com.example.security.entity.Permission;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 /*
  * @Date:2019/1/7
@@ -15,18 +16,18 @@ public class GenTree {
      * @param nodes
      * @return
      */
-    public static List<Permission> genRoot(List<Permission> nodes){
+    public static List<Permission> genRoot(List<Permission> nodes) {
         List<Permission> root = new LinkedList<Permission>();
         //遍历数据
         nodes.forEach(permission -> {
             //当父id是0的时候应该是根节点
-            if(permission.getPer_parent_id() == 0){
+            if (permission.getPer_parent_id() == 0) {
                 root.add(permission);
             }
         });
         //这里是子节点的创建方法
         root.forEach(permission -> {
-            genChildren(permission,nodes);
+            genChildren(permission, nodes);
         });
         //返回数据
         return root;
@@ -39,14 +40,14 @@ public class GenTree {
      */
     private static Permission genChildren(Permission permission, List<Permission> nodes) {
         //遍历传过来的数据
-        for (Permission permission1 :nodes){
+        for (Permission permission1 : nodes) {
             //如果数据中的父id和上面的per_id一致应该就放children中去
-            if(permission.getPer_id().equals(permission1.getPer_parent_id())){
+            if (permission.getPer_id().equals(permission1.getPer_parent_id())) {
                 //如果当前节点的子节点是空的则初始化，如果不为空就加进去
-                if(permission.getChildren() == null){
+                if (permission.getChildren() == null) {
                     permission.setChildren(new LinkedList<>());
                 }
-                permission.getChildren().add(genChildren(permission1,nodes));
+                permission.getChildren().add(genChildren(permission1, nodes));
             }
         }
         //返回数据

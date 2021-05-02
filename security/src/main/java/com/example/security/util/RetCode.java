@@ -4,7 +4,7 @@ package com.example.security.util;
  * @Date:2019/1/4
  * @Description：
  */
-public enum  RetCode {
+public enum RetCode {
 
     //成功
     SUCCESS(200),
@@ -26,7 +26,7 @@ public enum  RetCode {
 
     private int code;
 
-    private RetCode(Integer code){
+    RetCode(Integer code) {
         this.code = code;
     }
 

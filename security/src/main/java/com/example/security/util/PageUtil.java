@@ -17,11 +17,11 @@ public class PageUtil {
     private Integer pageTotal;
     private List data;
 
-    public PageUtil(Page page,List data) {
+    public PageUtil(Page page, List data) {
         this.pageCur = page.getPageNum();
         this.pageSize = page.getPageSize();
         this.rowTotal = page.getPages();
-        this.pageTotal = Integer.valueOf((int)page.getTotal());
+        this.pageTotal = Integer.valueOf((int) page.getTotal());
         this.data = data;
     }
 }

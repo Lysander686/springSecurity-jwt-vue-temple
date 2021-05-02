@@ -1,8 +1,5 @@
 package com.example.security.util;
 
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 /*
  * @Date:2019/1/24
  * @Description：

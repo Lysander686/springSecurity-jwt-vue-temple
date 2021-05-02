@@ -29,25 +29,11 @@ import java.util.Map;
 @Component
 public class JwtTokenUtil implements Serializable {
 
-    private String secret;
-
-    private Long expiration;
-
-    private String header;
-
     private static final ObjectMapper MAPPER = new ObjectMapper();
-
     private static CompressionCodecResolver codecResolver = new DefaultCompressionCodecResolver();
-
-    /* 从数据声明生成令牌
-      @param claims 数据声明
-     * @return 令牌
-     */
-    private String generateToken(Map<String, Object> claims) {
-        Date expirationDate = new Date(System.currentTimeMillis() + expiration);
-        return Jwts.builder().setClaims(claims).setExpiration(expirationDate).signWith(SignatureAlgorithm.HS512, secret).compact();
-    }
-
+    private String secret;
+    private Long expiration;
+    private String header;
 
     public static Map parseJwtPayload(String jwt) {
         Assert.hasText(jwt, "JWT String argument cannot be null or empty.");
@@ -109,7 +95,6 @@ public class JwtTokenUtil implements Serializable {
         return map;
     }
 
-
     /*  @Description
      * @Param [val] 从json数据中读取格式化map
      * @Return java.util.Map<java.lang.String,java.lang.Object>
@@ -122,6 +107,14 @@ public class JwtTokenUtil implements Serializable {
         }
     }
 
+    /* 从数据声明生成令牌
+      @param claims 数据声明
+     * @return 令牌
+     */
+    private String generateToken(Map<String, Object> claims) {
+        Date expirationDate = new Date(System.currentTimeMillis() + expiration);
+        return Jwts.builder().setClaims(claims).setExpiration(expirationDate).signWith(SignatureAlgorithm.HS512, secret).compact();
+    }
 
     /* 从令牌中获取数据声明
       @param token 令牌

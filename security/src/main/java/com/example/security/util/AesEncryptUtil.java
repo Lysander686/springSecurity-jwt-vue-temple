@@ -1,13 +1,12 @@
 package com.example.security.util;
 
 
-import org.apache.commons.codec.binary.Base64;
-
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -30,7 +29,7 @@ public class AesEncryptUtil {
     }
 
     public static IvParameterSpec getIv() throws UnsupportedEncodingException {
-        IvParameterSpec ivParameterSpec = new IvParameterSpec(iv.getBytes("utf-8"));
+        IvParameterSpec ivParameterSpec = new IvParameterSpec(iv.getBytes(StandardCharsets.UTF_8));
         return ivParameterSpec;
     }
 
@@ -52,7 +51,7 @@ public class AesEncryptUtil {
         IvParameterSpec ivParameterSpec = getIv();
         Cipher cipher = Cipher.getInstance(AlgorithmProvider);
         cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivParameterSpec);
-        byte[] cipherBytes = cipher.doFinal(src.getBytes(Charset.forName("utf-8")));
+        byte[] cipherBytes = cipher.doFinal(src.getBytes(StandardCharsets.UTF_8));
         return cipherBytes;
     }
 
@@ -116,7 +115,7 @@ public class AesEncryptUtil {
      */
     public static String decrypt(String psd) {
         try {
-            byte key[] = "1234567890ABCDEF1234567890ABCDEf".getBytes("utf-8");
+            byte[] key = "1234567890ABCDEF1234567890ABCDEf".getBytes(StandardCharsets.UTF_8);
             return new String(decrypt(psd, key));
         } catch (Exception e) {
             e.printStackTrace();

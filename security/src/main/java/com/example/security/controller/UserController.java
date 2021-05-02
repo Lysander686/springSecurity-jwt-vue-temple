@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.method.annotation.ModelAttributeMethodProcessor;
 
 import java.util.Map;
 
@@ -22,7 +21,7 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
-@CrossOrigin(origins = "*", allowCredentials= "true")
+@CrossOrigin(origins = "*", allowCredentials = "true")
 public class UserController {
 
     @Autowired
@@ -34,7 +33,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/getUserInfo")
-    public RetResult getUserInfo(@RequestBody(required = false) Map<String,Object>map){
+    public RetResult getUserInfo(@RequestBody(required = false) Map<String, Object> map) {
         //使用Spring Security 获取用户信息
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         log.info(userDetails.getUsername());
@@ -48,7 +47,7 @@ public class UserController {
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "/queryMenuTree")
-    public RetResult getMenuTree(@RequestBody(required = false) Map<String,Object> map){
+    public RetResult getMenuTree(@RequestBody(required = false) Map<String, Object> map) {
         //使用Spring Security 获取用户信息
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         log.info(userDetails.getUsername());
@@ -62,11 +61,10 @@ public class UserController {
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "/getAllMenuTree")
-    public RetResult getAllMenuTree(@RequestBody(required = false) Map<String,Object> map){
+    public RetResult getAllMenuTree(@RequestBody(required = false) Map<String, Object> map) {
         //使用Spring Security 获取用户信息
-        return new RetResult(RetCode.SUCCESS.getCode(),userService.getAllMenuTree(userService.getMenuTreeByPid(Long.parseLong("0"))));
+        return new RetResult(RetCode.SUCCESS.getCode(), userService.getAllMenuTree(userService.getMenuTreeByPid(Long.parseLong("0"))));
     }
-
 
 
 }

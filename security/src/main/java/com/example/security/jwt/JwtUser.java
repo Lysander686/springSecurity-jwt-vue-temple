@@ -27,7 +27,7 @@ public class JwtUser implements UserDetails {
     public JwtUser() {
     }
 
-    public JwtUser(String userid,String username, String password, Integer state, Collection<? extends GrantedAuthority> authorities) {
+    public JwtUser(String userid, String username, String password, Integer state, Collection<? extends GrantedAuthority> authorities) {
         this.userid = userid;
         this.username = username;
         this.password = password;
@@ -64,7 +64,6 @@ public class JwtUser implements UserDetails {
     public boolean isAccountNonLocked() {
         return true;
     }
-
 
 
     @JsonIgnore

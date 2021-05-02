@@ -15,7 +15,10 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /*
  * @Date:2019/1/7
@@ -23,8 +26,7 @@ import java.util.*;
  */
 @Service
 @Slf4j
-public class RoleServiceImpl implements RoleService
-{
+public class RoleServiceImpl implements RoleService {
 
     @Autowired
     private RoleMapper roleMapper;
@@ -37,15 +39,15 @@ public class RoleServiceImpl implements RoleService
     @Override
     public RetResult getRoleListByCond(Map<String, Object> map) {
 
-        Integer pageCur  = Integer.valueOf(map.get("curPageNum").toString());
+        Integer pageCur = Integer.valueOf(map.get("curPageNum").toString());
         Integer pageSize = Integer.valueOf(map.get("pageSize").toString());
 
         /* 分页数据
          */
-        Page page = PageHelper.startPage(pageCur,pageSize);
+        Page page = PageHelper.startPage(pageCur, pageSize);
         ArrayList list = roleMapper.getRoleListByCond(map);
-        PageUtil pageData = new PageUtil(page,list);
-        return new RetResult(RetCode.SUCCESS.getCode(),"查询成功",pageData);
+        PageUtil pageData = new PageUtil(page, list);
+        return new RetResult(RetCode.SUCCESS.getCode(), "查询成功", pageData);
     }
 
     /* 得到角色列表，资源管理使用
@@ -55,14 +57,14 @@ public class RoleServiceImpl implements RoleService
     @Override
     public RetResult getAllRoleList(Map<String, Object> map) {
         List<Role> roles = roleMapper.getAllRoleList();
-        List<Map<String,Object>> roleList = new ArrayList<>();
-        for (Role role :roles ){
-            Map<String,Object> map1 = new HashMap<>();
-            map1.put("id",role.getId());
-            map1.put("label",role.getRolename());
+        List<Map<String, Object>> roleList = new ArrayList<>();
+        for (Role role : roles) {
+            Map<String, Object> map1 = new HashMap<>();
+            map1.put("id", role.getId());
+            map1.put("label", role.getRolename());
             roleList.add(map1);
         }
-        return new RetResult(RetCode.SUCCESS.getCode(),roleList);
+        return new RetResult(RetCode.SUCCESS.getCode(), roleList);
     }
 
     /* 通过资源id获取角色集合
@@ -77,7 +79,7 @@ public class RoleServiceImpl implements RoleService
             Long id = role.getId();
             ids.add(id);
         }
-        return new RetResult(RetCode.SUCCESS.getCode(),ids);
+        return new RetResult(RetCode.SUCCESS.getCode(), ids);
     }
 
     /* 添加角色
@@ -87,12 +89,12 @@ public class RoleServiceImpl implements RoleService
     @Override
     public RetResult addRoleById(Map<String, Object> map) {
         Role role = new Role();
-        SnowFlake snowFlake = new SnowFlake(2,3);
+        SnowFlake snowFlake = new SnowFlake(2, 3);
         role.setId(snowFlake.nextId());
         role.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));
         role.setRolename((String) map.get("rolename"));
         role.setRoledesc((String) map.get("roledesc"));
-        return new RetResult(RetCode.SUCCESS.getCode(),roleMapper.add(role));
+        return new RetResult(RetCode.SUCCESS.getCode(), roleMapper.add(role));
 
     }
 
@@ -102,10 +104,10 @@ public class RoleServiceImpl implements RoleService
      */
     @Override
     public RetResult delRoleById(Map<String, Object> map) {
-        if(map.get("id") == null) {
-            return new RetResult(RetCode.FAIL.getCode(),"id不能为空");
+        if (map.get("id") == null) {
+            return new RetResult(RetCode.FAIL.getCode(), "id不能为空");
         }
-        return new RetResult(RetCode.SUCCESS.getCode(),roleMapper.del(Long.parseLong(map.get("id").toString())));
+        return new RetResult(RetCode.SUCCESS.getCode(), roleMapper.del(Long.parseLong(map.get("id").toString())));
     }
 
     /* 更新角色信息
@@ -116,8 +118,8 @@ public class RoleServiceImpl implements RoleService
     public RetResult updateById(Map<String, Object> map) {
         if (map.get("id") == null) {
 
-            return new RetResult(RetCode.FAIL.getCode(),"id不能为空");
+            return new RetResult(RetCode.FAIL.getCode(), "id不能为空");
         }
-        return new RetResult(RetCode.SUCCESS.getCode(),roleMapper.update(map));
+        return new RetResult(RetCode.SUCCESS.getCode(), roleMapper.update(map));
     }
 }

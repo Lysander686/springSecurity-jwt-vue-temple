@@ -13,18 +13,18 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisUtil {
     @Autowired
-    private RedisTemplate<String,String> redisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
 
     /* 存键值对
      * @param key
      * @param value
      */
-    public void set(String key,String value){
-        ValueOperations<String,String> valueOperations = redisTemplate.opsForValue();
-        valueOperations.set(key,value);
+    public void set(String key, String value) {
+        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+        valueOperations.set(key, value);
     }
 
-    public long getExpireTime(String key){
+    public long getExpireTime(String key) {
         long time = redisTemplate.getExpire(key);
         return time;
     }
@@ -34,19 +34,18 @@ public class RedisUtil {
      * @param value
      * @param time
      */
-    public void setAndTime(String key,String value,long time){
-        ValueOperations<String,String> valueOperations = redisTemplate.opsForValue();
-        valueOperations.set(key,value);
-        redisTemplate.expire(key,time,TimeUnit.SECONDS);
+    public void setAndTime(String key, String value, long time) {
+        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+        valueOperations.set(key, value);
+        redisTemplate.expire(key, time, TimeUnit.SECONDS);
     }
-
 
 
     /* 读取redis
      * @param key
      * @return
      */
-    public String get( String key) {
+    public String get(String key) {
         String result = null;
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         result = operations.get(key);

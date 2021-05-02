@@ -18,13 +18,13 @@ public interface RoleMapper {
 
     Integer del(Long id);
 
-    Integer update(Map<String,Object> map);
+    Integer update(Map<String, Object> map);
 
     Set<Role> selectByUserName(String username);
 
-    ArrayList<Role> getRoleListByCond(Map<String,Object> map);
+    ArrayList<Role> getRoleListByCond(Map<String, Object> map);
 
-    ArrayList<Permission> getMenuTree(Map<String,Object> map);
+    ArrayList<Permission> getMenuTree(Map<String, Object> map);
 
     List<Role> getAllRoleList();
 

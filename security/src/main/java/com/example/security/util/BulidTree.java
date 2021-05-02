@@ -4,7 +4,9 @@ import com.example.security.entity.Permission;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 
 /*
@@ -14,30 +16,30 @@ import java.util.*;
 @Slf4j
 public class BulidTree {
 
-    public static List<Menu> genRoot(List<Permission> permissions){
+    public static List<Menu> genRoot(List<Permission> permissions) {
 
         List<Menu> trees = new LinkedList<Menu>();
         permissions.forEach(permission -> {
-            if(permission != null){
+            if (permission != null) {
                 List<Permission> permissionList = permission.getChildren();
                 Menu menu = new Menu();
                 menu.setName(permission.getPer_name());
                 menu.setPath(permission.getPer_resource());
-                if(permission.getPer_parent_id().toString().equals("0")){
+                if (permission.getPer_parent_id().toString().equals("0")) {
                     //一级菜单的path需要加'/'
-                    menu.setPath("/"+permission.getPer_resource());
+                    menu.setPath("/" + permission.getPer_resource());
                     //判断component是否为空如果是空返回Layout给前端
-                    menu.setComponent(StringUtils.isEmpty(permission.getPer_component()) ?"Layout" : permission.getPer_component());
-                }else{
+                    menu.setComponent(StringUtils.isEmpty(permission.getPer_component()) ? "Layout" : permission.getPer_component());
+                } else {
                     menu.setComponent(permission.getPer_component());
                 }
-                menu.setMeta(new MenuMetaVo(permission.getPer_name(),permission.getPer_icon()));
+                menu.setMeta(new MenuMetaVo(permission.getPer_name(), permission.getPer_icon()));
                 //判断是否有子路由
-                if(permissionList != null && permissionList.size() != 0){
+                if (permissionList != null && permissionList.size() != 0) {
                     menu.setAlwaysShow(true);
                     menu.setRedirect("noredirect");
                     menu.setChildren(genRoot(permissionList));
-                } else if (permission.getPer_parent_id().toString().equals("0")){
+                } else if (permission.getPer_parent_id().toString().equals("0")) {
                     Menu menu1 = new Menu();
                     menu1.setMeta(menu.getMeta());
                     menu1.setPath("index");

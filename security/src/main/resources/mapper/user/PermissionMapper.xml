@@ -3,8 +3,10 @@
 <mapper namespace="com.example.security.mapper.PermissionMapper">
 
     <insert id="add">
-        insert into Permission (per_id,per_name,per_parent_id,per_resource,per_type,per_icon,per_describe,per_component,per_sort,per_crtTime)
-        values(#{per_id},#{per_name},#{per_parent_id},#{per_resource},#{per_type},#{per_icon},#{per_describe},#{per_component},#{per_sort},#{per_crtTime})
+        insert into Permission (per_id, per_name, per_parent_id, per_resource, per_type, per_icon, per_describe,
+                                per_component, per_sort, per_crtTime)
+        values (#{per_id}, #{per_name}, #{per_parent_id}, #{per_resource}, #{per_type}, #{per_icon}, #{per_describe},
+                #{per_component}, #{per_sort}, #{per_crtTime})
     </insert>
 
 
@@ -24,36 +26,46 @@
     </update>
 
     <delete id="del">
-        delete from RolePermission where rp_role_id = #{rp_role_id}
+        delete
+        from RolePermission
+        where rp_role_id = #{rp_role_id}
     </delete>
 
     <delete id="delByPerid">
-        delete from Permission where per_id = #{per_id}
+        delete
+        from Permission
+        where per_id = #{per_id}
     </delete>
 
     <select id="getCount" resultType="Integer">
-        select count(*) from RolePermission where rp_role_id = #{rp_role_id}
+        select count(*)
+        from RolePermission
+        where rp_role_id = #{rp_role_id}
     </select>
 
     <select id="getAllMenuTree" resultType="com.example.security.entity.Permission">
-        select * from Permission order by per_sort asc
+        select *
+        from Permission
+        order by per_sort asc
     </select>
 
     <insert id="addRP">
-        insert into RolePermission (rp_id,rp_role_id,rp_per_id) value (#{rp_id},#{rp_role_id},#{rp_per_id})
+        insert into RolePermission (rp_id, rp_role_id, rp_per_id) value (#{rp_id}, #{rp_role_id}, #{rp_per_id})
     </insert>
 
 
-
     <select id="getParentMenu" resultType="com.example.security.entity.Permission">
-        select * from Permission where per_parent_id = #{per_parent_id} order by per_sort asc
+        select *
+        from Permission
+        where per_parent_id = #{per_parent_id}
+        order by per_sort asc
     </select>
 
     <select id="getPerIdList" resultType="String">
-        select rp_per_id from RolePermission where rp_role_id = #{rp_role_id}
+        select rp_per_id
+        from RolePermission
+        where rp_role_id = #{rp_role_id}
     </select>
-
-
 
 
 </mapper>
