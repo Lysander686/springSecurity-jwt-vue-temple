@@ -1,7 +1,6 @@
 package com.example.security.jwt;
 
 import com.alibaba.fastjson.JSON;
-import com.example.security.mapper.UserMapper;
 import com.example.security.util.RedisUtil;
 import com.example.security.util.RetCode;
 import com.example.security.util.RetResult;
@@ -23,12 +22,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Autoor:杨文彬
+ *
  * @Date:2019/1/4
  * @Description：
  */
@@ -47,25 +44,14 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Resource
     private RedisUtil redisUtil;
 
-    @Autowired
-    private UserMapper userMapper;
-
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) {
         String authHeader = request.getHeader(jwtTokenUtil.getHeader());
         try {
-            if (authHeader != null && StringUtils.isNotEmpty(authHeader)) {
+            if (StringUtils.isNotEmpty(authHeader)) {
                 String username = jwtTokenUtil.getUsernameFromToken(authHeader);
-                jwtTokenUtil.validateToken(authHeader);//验证令牌
-                if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                    UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-                    if (jwtTokenUtil.validateToken(authHeader)) {
-                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                        SecurityContextHolder.getContext().setAuthentication(authentication);
-                    }
-                }
+                validateAuthHeader(request, authHeader, username);
             }
             chain.doFilter(request, response);
         }
@@ -81,24 +67,13 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 JwtUser jwtUser = new JwtUser();
                 jwtUser.setUserid(userid);
                 jwtUser.setUsername(username);
-                Map<String, Object> claims = new HashMap<>(2);
-                claims.put("sub", jwtUser.getUsername());
-                claims.put("userid", jwtUser.getUserid());
-                claims.put("created", new Date());
+
                 String token = jwtTokenUtil.generateToken(jwtUser);
                 //更新redis中的token
                 //首先获取key的有效期，把新的token的有效期设为旧的token剩余的有效期
                 redisUtil.setAndTime(userid,token,redisUtil.getExpireTime(userid));
-                if (token != null && StringUtils.isNotEmpty(token)) {
-                    jwtTokenUtil.validateToken(token);//验证令牌
-                    if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                        UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-                        if (jwtTokenUtil.validateToken(token)) {
-                            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                            SecurityContextHolder.getContext().setAuthentication(authentication);
-                        }
-                    }
+                if (StringUtils.isNotEmpty(token)) {
+                    validateAuthHeader(request, token, username);
                 }
                 response.setHeader("newToken",token);
                 response.addHeader("Access-Control-Expose-Headers","newToken");
@@ -128,6 +103,18 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void validateAuthHeader(HttpServletRequest request, String authHeader, String username) {
+        jwtTokenUtil.validateToken(authHeader);//验证令牌
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+            if (jwtTokenUtil.validateToken(authHeader)) {
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
         }
     }
 }
